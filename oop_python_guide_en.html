@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OOP in Python — Complete Exam Guide | Alfred Ramzy</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@400;600;700;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #060810;
+  --surface: #0d1117;
+  --surface2: #161b22;
+  --surface3: #1c2433;
+  --accent-blue: #58a6ff;
+  --accent-orange: #f0883e;
+  --accent-green: #3fb950;
+  --accent-purple: #bc8cff;
+  --accent-cyan: #39d3f3;
+  --accent-red: #f85149;
+  --accent-yellow: #e3b341;
+  --text: #e6edf3;
+  --text2: #8b949e;
+  --text3: #6e7681;
+  --border: rgba(88,166,255,0.15);
+  --code-bg: #010409;
+  --glow-blue: rgba(88,166,255,0.08);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+}
+
+/* ─── HERO ─────────────────────────────────────────── */
+.hero {
+  position: relative;
+  padding: 70px 40px 50px;
+  text-align: center;
+  overflow: hidden;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(88,166,255,0.12) 0%, transparent 70%);
+  border-bottom: 1px solid var(--border);
+}
+.hero-eyebrow {
+  font-size:.8rem; letter-spacing:.2em; text-transform:uppercase;
+  color: var(--accent-cyan); font-weight:700; margin-bottom:18px;
+}
+.hero h1 {
+  font-family:'Outfit',sans-serif; font-weight:900;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  background: linear-gradient(135deg, #58a6ff 0%, #bc8cff 50%, #39d3f3 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text; line-height:1.15; margin-bottom:16px;
+}
+.hero-sub { color:var(--text2); font-size:1.1rem; max-width:600px; margin:0 auto 24px; }
+.hero-tags { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+.htag {
+  padding:5px 16px; border-radius:20px; font-size:.8rem; font-weight:700;
+  border:1px solid; letter-spacing:.05em;
+}
+.ht-blue  { border-color:var(--accent-blue);  color:var(--accent-blue);  background:rgba(88,166,255,0.08); }
+.ht-green { border-color:var(--accent-green); color:var(--accent-green); background:rgba(63,185,80,0.08); }
+.ht-purple{ border-color:var(--accent-purple);color:var(--accent-purple);background:rgba(188,140,255,0.08); }
+.ht-orange{ border-color:var(--accent-orange);color:var(--accent-orange);background:rgba(240,136,62,0.08); }
+
+/* ─── NAV ───────────────────────────────────────────── */
+.nav {
+  position:sticky; top:0; z-index:100;
+  background:rgba(6,8,16,0.9); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:10px 20px;
+  display:flex; gap:6px; flex-wrap:wrap; justify-content:center;
+}
+.nav a {
+  color:var(--text2); text-decoration:none;
+  padding:5px 14px; border-radius:6px; font-size:.82rem; font-weight:600;
+  transition:all .25s; border:1px solid transparent;
+}
+.nav a:hover { color:var(--accent-blue); border-color:var(--border); background:var(--glow-blue); }
+
+/* ─── LAYOUT ────────────────────────────────────────── */
+.container { max-width:1120px; margin:0 auto; padding:50px 20px; }
+.section { margin-bottom:70px; }
+
+.section-header {
+  display:flex; align-items:center; gap:14px;
+  margin-bottom:30px; padding-bottom:14px;
+  border-bottom:1px solid var(--border);
+}
+.section-num {
+  width:38px; height:38px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-weight:900; font-size:1rem; flex-shrink:0;
+}
+.section-title { font-family:'Outfit',sans-serif; font-size:1.75rem; font-weight:800; }
+.section-desc { color:var(--text2); font-size:.95rem; margin-top:3px; }
+
+/* ─── CARDS ─────────────────────────────────────────── */
+.card {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px; padding:26px;
+  margin-bottom:18px;
+  transition:border-color .3s, box-shadow .3s;
+}
+.card:hover { border-color:rgba(88,166,255,0.3); box-shadow:0 0 24px rgba(88,166,255,0.05); }
+.card-title { font-size:1.05rem; font-weight:700; color:var(--accent-yellow); margin-bottom:14px; }
+
+/* ─── CODE ──────────────────────────────────────────── */
+pre {
+  background:var(--code-bg);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:10px; padding:20px 22px;
+  overflow-x:auto; margin:14px 0; position:relative;
+}
+pre::before {
+  content:'Python';
+  position:absolute; top:8px; right:14px;
+  font-size:.7rem; color:var(--text3);
+  font-family:'JetBrains Mono',monospace; letter-spacing:.1em;
+}
+code, pre code {
+  font-family:'JetBrains Mono',monospace;
+  font-size:.88rem; line-height:1.8; color:#e6edf3;
+}
+.inline { background:rgba(255,255,255,0.07); padding:2px 8px; border-radius:5px; font-family:'JetBrains Mono',monospace; font-size:.88em; color:var(--accent-cyan); }
+
+/* syntax highlight */
+.kw  { color:#ff7b72; font-weight:600; }
+.fn  { color:#d2a8ff; }
+.st  { color:#a5d6ff; }
+.cm  { color:#6e7681; font-style:italic; }
+.num { color:#79c0ff; }
+.cl  { color:#ffa657; font-weight:600; }
+.sf  { color:#f0883e; }
+.op  { color:#ff7b72; }
+
+/* ─── OUTPUT ────────────────────────────────────────── */
+.output {
+  background:#0a1a0a; border:1px solid rgba(63,185,80,0.25);
+  border-radius:8px; padding:14px 18px; margin:10px 0;
+  font-family:'JetBrains Mono',monospace; font-size:.86rem;
+  color:#3fb950; position:relative;
+}
+.output::before { content:'Output ▶'; display:block; color:var(--text3); font-size:.72rem; margin-bottom:6px; }
+
+/* ─── INFO BOXES ─────────────────────────────────────── */
+.callout {
+  border-radius:10px; padding:16px 20px; margin:16px 0;
+  border-right:3px solid; font-size:.93rem;
+}
+.c-blue   { background:rgba(88,166,255,0.07);  border-color:var(--accent-blue);   }
+.c-orange { background:rgba(240,136,62,0.07);  border-color:var(--accent-orange); }
+.c-green  { background:rgba(63,185,80,0.07);   border-color:var(--accent-green);  }
+.c-red    { background:rgba(248,81,73,0.07);   border-color:var(--accent-red);    }
+.c-purple { background:rgba(188,140,255,0.07); border-color:var(--accent-purple); }
+.callout strong { display:block; margin-bottom:5px; font-size:.82rem; text-transform:uppercase; letter-spacing:.08em; }
+
+/* ─── GRID ──────────────────────────────────────────── */
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+@media(max-width:700px) { .grid2,.grid3 { grid-template-columns:1fr; } }
+
+/* ─── PILLARS ───────────────────────────────────────── */
+.pillars { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin:20px 0; }
+@media(max-width:900px) { .pillars { grid-template-columns:1fr 1fr; } }
+.pillar {
+  background:var(--surface); border-radius:14px; padding:22px 18px;
+  text-align:center; border:1px solid var(--border); transition:all .3s;
+}
+.pillar:hover { transform:translateY(-4px); }
+.pillar .pico { font-size:2.2rem; margin-bottom:10px; }
+.pillar .pname { font-weight:800; font-size:1rem; margin-bottom:6px; }
+.pillar .pdesc { font-size:.8rem; color:var(--text2); }
+.pp1 { border-top:3px solid var(--accent-blue); }
+.pp2 { border-top:3px solid var(--accent-orange); }
+.pp3 { border-top:3px solid var(--accent-green); }
+.pp4 { border-top:3px solid var(--accent-purple); }
+
+/* ─── ACCESS TABLE ──────────────────────────────────── */
+.access-grid {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+  border:1px solid var(--border); border-radius:12px; overflow:hidden;
+  margin:16px 0;
+}
+.ag-head { background:var(--surface3); padding:12px; font-weight:700; font-size:.88rem; text-align:center; }
+.ag-cell { background:var(--surface); padding:11px 14px; font-size:.85rem; border-top:1px solid var(--border); text-align:center; }
+.ag-label { background:var(--surface2); padding:11px 14px; font-size:.85rem; border-top:1px solid var(--border); font-weight:700; }
+.yes { color:var(--accent-green); font-weight:700; }
+.no  { color:var(--accent-red);   font-weight:700; }
+.pub  { color:var(--accent-green); }
+.prot { color:var(--accent-yellow); }
+.priv { color:var(--accent-red); }
+
+/* ─── INHERITANCE TYPES ─────────────────────────────── */
+.inh-types { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+@media(max-width:700px) { .inh-types { grid-template-columns:1fr; } }
+.inh-type {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; padding:18px; border-left:4px solid;
+}
+.it1 { border-left-color:var(--accent-blue); }
+.it2 { border-left-color:var(--accent-green); }
+.it3 { border-left-color:var(--accent-purple); }
+.it4 { border-left-color:var(--accent-orange); }
+.it5 { border-left-color:var(--accent-cyan); }
+.inh-type h4 { font-size:.95rem; font-weight:700; margin-bottom:8px; }
+.inh-type .diagram { font-family:'JetBrains Mono',monospace; font-size:.82rem; color:var(--text2); margin:8px 0; }
+
+/* ─── COMPARE TABLE ─────────────────────────────────── */
+.cmp-table { width:100%; border-collapse:collapse; border-radius:12px; overflow:hidden; margin:16px 0; }
+.cmp-table th { padding:13px 18px; text-align:left; font-size:.88rem; font-weight:700; }
+.cmp-table td { padding:11px 18px; font-size:.86rem; border-top:1px solid rgba(255,255,255,0.05); vertical-align:middle; }
+.cmp-table tr:hover td { background:var(--glow-blue); }
+.th-concept { background:var(--surface3); color:var(--text2); }
+.th-cpp     { background:rgba(248,81,73,0.15); color:var(--accent-red); }
+.th-python  { background:rgba(63,185,80,0.15);  color:var(--accent-green); }
+.td-concept { color:var(--text2); font-weight:600; }
+.td-cpp     { font-family:'JetBrains Mono',monospace; color:#ffa69e; font-size:.82rem; }
+.td-python  { font-family:'JetBrains Mono',monospace; color:#89d4a0; font-size:.82rem; }
+
+/* ─── QUICK REF ─────────────────────────────────────── */
+.qr-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:12px; margin:16px 0; }
+.qr-item { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:14px; }
+.qr-key  { font-family:'JetBrains Mono',monospace; color:var(--accent-cyan); font-size:.85rem; font-weight:600; margin-bottom:5px; }
+.qr-val  { color:var(--text2); font-size:.8rem; }
+
+/* ─── QUIZ ──────────────────────────────────────────── */
+.quiz-wrap {
+  background:linear-gradient(135deg,#0d1117,#101820);
+  border:1px solid rgba(188,140,255,0.3);
+  border-radius:20px; padding:36px;
+}
+.quiz-title {
+  font-family:'Outfit',sans-serif; font-size:1.8rem; font-weight:800;
+  color:var(--accent-yellow); text-align:center; margin-bottom:28px;
+  display:flex; align-items:center; justify-content:center; gap:12px;
+}
+.question {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; padding:22px; margin-bottom:20px;
+  border-left:4px solid var(--accent-purple);
+}
+.q-num { font-size:.75rem; font-weight:700; color:var(--accent-purple); letter-spacing:.1em; text-transform:uppercase; margin-bottom:8px; }
+.q-text { font-size:.97rem; font-weight:600; margin-bottom:14px; line-height:1.6; }
+.q-code { background:var(--code-bg); border:1px solid rgba(255,255,255,0.06); border-radius:8px; padding:14px 18px; margin:10px 0; font-family:'JetBrains Mono',monospace; font-size:.83rem; line-height:1.7; color:#e6edf3; }
+.options { display:flex; flex-direction:column; gap:8px; }
+.opt {
+  background:var(--surface2); border:1px solid rgba(255,255,255,0.07);
+  border-radius:8px; padding:11px 16px; cursor:pointer;
+  transition:all .25s; display:flex; align-items:center; gap:12px;
+  font-size:.9rem;
+}
+.opt:hover { background:var(--glow-blue); border-color:var(--accent-blue); }
+.opt.correct { background:rgba(63,185,80,0.12); border-color:var(--accent-green); color:var(--accent-green); }
+.opt.wrong   { background:rgba(248,81,73,0.12); border-color:var(--accent-red);   color:var(--accent-red);   }
+.opt-badge {
+  width:26px; height:26px; border-radius:50%; background:var(--accent-purple);
+  color:#fff; display:flex; align-items:center; justify-content:center;
+  font-size:.75rem; font-weight:700; flex-shrink:0;
+}
+.fb {
+  display:none; margin-top:12px; padding:11px 16px;
+  border-radius:8px; font-size:.88rem; font-weight:600;
+}
+.fb.show { display:block; }
+.fb-ok  { background:rgba(63,185,80,0.1);  color:var(--accent-green); border:1px solid rgba(63,185,80,0.3); }
+.fb-bad { background:rgba(248,81,73,0.1);  color:var(--accent-red);   border:1px solid rgba(248,81,73,0.3); }
+
+/* ─── DIVIDER ───────────────────────────────────────── */
+.divider { height:1px; background:linear-gradient(90deg,transparent,var(--border),transparent); margin:40px 0; }
+
+/* ─── FOOTER ─────────────────────────────────────────── */
+footer {
+  text-align:center; padding:32px; border-top:1px solid var(--border);
+  color:var(--text2); font-size:.9rem;
+}
+footer .credit {
+  font-family:'Outfit',sans-serif; font-weight:900; font-size:1.2rem;
+  background:linear-gradient(90deg,var(--accent-blue),var(--accent-purple),var(--accent-cyan));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+
+/* scrollbar */
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--accent-purple); border-radius:3px; }
+
+/* ─── ANIMATE ───────────────────────────────────────── */
+@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+.section { animation:fadeUp .45s ease both; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-eyebrow">Exam Prep · Python OOP</div>
+  <h1>Object-Oriented Programming<br>Complete Study Guide</h1>
+  <p class="hero-sub">Everything you need to walk in and solve any question — with code, diagrams, and comparisons to C++</p>
+  <div class="hero-tags">
+    <span class="htag ht-blue">Classes &amp; Objects</span>
+    <span class="htag ht-orange">Encapsulation</span>
+    <span class="htag ht-green">Inheritance</span>
+    <span class="htag ht-purple">Polymorphism</span>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#pillars">4 Pillars</a>
+  <a href="#classes">Classes</a>
+  <a href="#encap">Encapsulation</a>
+  <a href="#inherit">Inheritance</a>
+  <a href="#poly">Polymorphism</a>
+  <a href="#compare">C++ vs Python</a>
+  <a href="#quickref">Quick Ref</a>
+  <a href="#quiz">Quiz</a>
+</nav>
+
+<div class="container">
+
+<!-- ════════════════════════════════════════════════════ -->
+<!--  PILLARS                                           -->
+<!-- ════════════════════════════════════════════════════ -->
+<section class="section" id="pillars">
+  <div class="section-header">
+    <div class="section-num" style="background:rgba(88,166,255,0.15);color:var(--accent-blue)">★</div>
+    <div>
+      <div class="section-title" style="color:var(--accent-blue)">The 4 Pillars of OOP</div>
+      <div class="section-desc">Every OOP language is built on these four concepts</div>
+    </div>
+  </div>
+
+  <div class="pillars">
+    <div class="pillar pp1">
+      <div class="pico">📦</div>
+      <div class="pname" style="color:var(--accent-blue)">Encapsulation</div>
+      <div class="pdesc">Bundle data + methods together. Hide internal details. Control access.</div>
+    </div>
+    <div class="pillar pp2">
+      <div class="pico">👨‍👩‍👦</div>
+      <div class="pname" style="color:var(--accent-orange)">Inheritance</div>
+      <div class="pdesc">Child class reuses parent's attributes and methods. Avoids repetition.</div>
+    </div>
+    <div class="pillar pp3">
+      <div class="pico">🦎</div>
+      <div class="pname" style="color:var(--accent-green)">Polymorphism</div>
+      <div class="pdesc">Same method name behaves differently based on object type.</div>
+    </div>
+    <div class="pillar pp4">
+      <div class="pico">🔭</div>
+      <div class="pname" style="color:var(--accent-purple)">Abstraction</div>
+      <div class="pdesc">Hide complexity. Show only what is necessary to the user.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!--  CLASSES & OBJECTS                                  -->
+<!-- ════════════════════════════════════════════════════ -->
+<section class="section" id="classes">
+  <div class="section-header">
+    <div class="section-num" style="background:rgba(88,166,255,0.15);color:var(--accent-blue)">1</div>
+    <div>
+      <div class="section-title" style="color:var(--accent-blue)">Classes &amp; Objects</div>
+      <div class="section-desc">The foundation of OOP — Class = blueprint, Object = instance built from that blueprint</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">What is a Class?</div>
+      <p style="color:var(--text2);font-size:.93rem;margin-bottom:12px">A class is a <strong>template</strong> — it defines what data (attributes) and behaviour (methods) its objects will have. Like a cookie-cutter: defines the shape, but is not a cookie itself.</p>
+      <div class="callout c-blue">
+        <strong>Analogy</strong>
+        Class = "Car blueprint". Object = "The actual car you drive."
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">What is an Object?</div>
+      <p style="color:var(--text2);font-size:.93rem;margin-bottom:12px">An object is a <strong>concrete instance</strong> of a class. You can create many objects from a single class, each with its own data.</p>
+      <div class="callout c-green">
+        <strong>Key point</strong>
+        p1 = Person("Ahmed") and p2 = Person("Sara") are two separate objects — different data, same class.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Full Class Anatomy — with C++ comparison</div>
+<pre><code><span class="kw">class</span> <span class="cl">Person</span>:
+    <span class="cm"># ─── __init__ is the CONSTRUCTOR ────────────────────────
+    #   - Runs automatically when you create an object
+    #   - Equivalent to MyClass() { } in C++
+    #   - 'self' is mandatory as the FIRST parameter in every method
+    #   - 'self' is like 'this' pointer in C++ — refers to the object itself</span>
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="sf">self</span>, name: str, age: int):
+        <span class="sf">self</span>.name = name          <span class="cm"># instance variable (each object owns its own copy)</span>
+        <span class="sf">self</span>.age  = age
+
+    <span class="cm"># ─── Regular Method ─────────────────────────────────────
+    #   - Always receives 'self' as first param (like 'this->' in C++)</span>
+    <span class="kw">def</span> <span class="fn">greet</span>(<span class="sf">self</span>):
+        <span class="fn">print</span>(<span class="st">f"Hello, I am {self.name} and I am {self.age} years old."</span>)
+
+    <span class="cm"># ─── __str__ controls what print(object) shows ───────────
+    #   - Without it: print(p1) shows: &lt;__main__.Person object at 0x...&gt;</span>
+    <span class="kw">def</span> <span class="fn">__str__</span>(<span class="sf">self</span>):
+        <span class="kw">return</span> <span class="st">f"Person(name={self.name}, age={self.age})"</span>
+
+
+<span class="cm"># ─── Creating Objects ────────────────────────────────────
+#   Python: p1 = Person("Ahmed", 20)
+#   C++:    Person p1("Ahmed", 20);   or   Person* p1 = new Person("Ahmed",20);</span>
+
+p1 = <span class="cl">Person</span>(<span class="st">"Ahmed"</span>, <span class="num">20</span>)    <span class="cm"># __init__ is called automatically</span>
+p2 = <span class="cl">Person</span>(<span class="st">"Sara"</span>,  <span class="num">22</span>)
+
+p1.greet()                   <span class="cm"># Hello, I am Ahmed and I am 20 years old.</span>
+<span class="fn">print</span>(p1)                    <span class="cm"># Person(name=Ahmed, age=20)  ← uses __str__</span>
+<span class="fn">print</span>(p1.name)               <span class="cm"># Ahmed</span>
+
+<span class="cm"># ─── Modify attribute ────────────────────────────────────</span>
+p1.age = <span class="num">25</span>                  <span class="cm"># direct update (like p1.age = 25 in C++)</span>
+
+<span class="cm"># ─── Delete object ───────────────────────────────────────
+#   Python: del p1   (garbage collected)
+#   C++:    delete p1;   (if heap allocated)</span>
+<span class="kw">del</span> p1
+<span class="cm"># print(p1.name)  → NameError: name 'p1' is not defined</span></code></pre>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Why does every method need <span class="inline">self</span>?</div>
+      <p style="color:var(--text2);font-size:.9rem;margin-bottom:10px">In C++, the compiler silently passes <span class="inline">this</span> to every member function. Python does <strong>NOT</strong> do that — you must write <span class="inline">self</span> explicitly as the first parameter.</p>
+      <div class="callout c-red">
+        <strong>Common Mistake</strong>
+        Forgetting <code>self</code> in a method definition. Python will throw a TypeError when you call it.
+      </div>
+<pre><code><span class="kw">class</span> <span class="cl">Bad</span>:
+    <span class="kw">def</span> <span class="fn">greet</span>():          <span class="cm"># ❌ missing self</span>
+        <span class="fn">print</span>(<span class="st">"hello"</span>)
+
+<span class="kw">class</span> <span class="cl">Good</span>:
+    <span class="kw">def</span> <span class="fn">greet</span>(<span class="sf">self</span>):      <span class="cm"># ✅ correct</span>
+        <span class="fn">print</span>(<span class="st">"hello"</span>)</code></pre>
+    </div>
+    <div class="card">
+      <div class="card-title">Class vs Instance variables</div>
+<pre><code><span class="kw">class</span> <span class="cl">Student</span>:
+    school = <span class="st">"XYZ University"</span>  <span class="cm"># class variable
+    # shared by ALL objects</span>
+
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="sf">self</span>, name):
+        <span class="sf">self</span>.name = name      <span class="cm"># instance variable
+        # unique per object</span>
+
+s1 = <span class="cl">Student</span>(<span class="st">"Ali"</span>)
+s2 = <span class="cl">Student</span>(<span class="st">"Nour"</span>)
+
+<span class="fn">print</span>(s1.school)  <span class="cm"># XYZ University</span>
+<span class="fn">print</span>(s2.school)  <span class="cm"># XYZ University (same)</span>
+<span class="fn">print</span>(s1.name)    <span class="cm"># Ali</span>
+<span class="fn">print</span>(s2.name)    <span class="cm"># Nour (different)</span></code></pre>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!--  ENCAPSULATION                                      -->
+<!-- ════════════════════════════════════════════════════ -->
+<section class="section" id="encap">
+  <div class="section-header">
+    <div class="section-num" style="background:rgba(240,136,62,0.15);color:var(--accent-orange)">2</div>
+    <div>
+      <div class="section-title" style="color:var(--accent-orange)">Encapsulation</div>
+      <div class="section-desc">Bundling data + methods. Controlling who can access what.</div>
+    </div>
+  </div>
+
+  <div class="callout c-orange">
+    <strong>Core Idea</strong>
+    Encapsulation = wrapping data and the methods that operate on it inside one unit (the class), and restricting direct access to some of that data. Think of it as making some variables "private" so outsiders can't accidentally break them.
+  </div>
+
+  <!-- Access Modifiers -->
+  <div class="card">
+    <div class="card-title">The 3 Access Levels in Python</div>
+    <div class="access-grid">
+      <div class="ag-head">Level</div>
+      <div class="ag-head">Syntax</div>
+      <div class="ag-head">Inside Class</div>
+      <div class="ag-head">Subclass</div>
+
+      <div class="ag-label pub">Public</div>
+      <div class="ag-cell"><span class="inline">self.name</span> (no underscore)</div>
+      <div class="ag-cell yes">✓</div>
+      <div class="ag-cell yes">✓</div>
+
+      <div class="ag-label prot">Protected</div>
+      <div class="ag-cell"><span class="inline">self._name</span> (one _)</div>
+      <div class="ag-cell yes">✓</div>
+      <div class="ag-cell yes">✓ (by convention)</div>
+
+      <div class="ag-label priv">Private</div>
+      <div class="ag-cell"><span class="inline">self.__name</span> (two __)</div>
+      <div class="ag-cell yes">✓</div>
+      <div class="ag-cell no">✗ NOT inherited</div>
+    </div>
+    <div class="callout c-purple" style="margin-top:14px">
+      <strong>Important: Python's "privacy" is not absolute</strong>
+      Python uses Name Mangling for private vars: <code>self.__salary</code> is internally stored as <code>_Employee__salary</code>. You CAN still access it with <code>obj._Employee__salary</code> — it's a deterrent, not a lock.
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Public &amp; Protected — Examples</div>
+<pre><code><span class="kw">class</span> <span class="cl">Employee</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="sf">self</span>, name, dept, salary):
+        <span class="sf">self</span>.name   = name    <span class="cm"># PUBLIC   — anyone can access</span>
+        <span class="sf">self</span>._dept  = dept    <span class="cm"># PROTECTED — convention: subclasses only</span>
+        <span class="sf">self</span>.__salary = salary <span class="cm"># PRIVATE  — blocked outside class</span>
+
+emp = <span class="cl">Employee</span>(<span class="st">"Sara"</span>, <span class="st">"IT"</span>, <span class="num">8000</span>)
+
+<span class="fn">print</span>(emp.name)      <span class="cm"># ✅ Sara</span>
+<span class="fn">print</span>(emp._dept)     <span class="cm"># ✅ IT  (works, but against convention)</span>
+<span class="fn">print</span>(emp.__salary)  <span class="cm"># ❌ AttributeError!</span>
+<span class="cm"># Name mangling workaround:</span>
+<span class="fn">print</span>(emp._Employee__salary)  <span class="cm"># ✅ 8000 (not recommended)</span></code></pre>
+    </div>
+    <div class="card">
+      <div class="card-title">Accessing Private via Method</div>
+<pre><code><span class="kw">class</span> <span class="cl">Student</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="sf">self</span>, name, gpa):
+        <span class="sf">self</span>.name  = name
+        <span class="sf">self</span>.__gpa = gpa   <span class="cm"># private</span>
+
+    <span class="kw">def</span> <span class="fn">show</span>(<span class="sf">self</span>):
+        <span class="cm"># Inside the class: private IS accessible</span>
+        <span class="fn">print</span>(<span class="st">f"{self.name}: GPA = {self.__gpa}"</span>)
+
+s = <span class="cl">Student</span>(<span class="st">"Ali"</span>, <span class="num">3.9</span>)
+s.show()            <span class="cm"># ✅ Ali: GPA = 3.9</span>
+<span class="fn">print</span>(s.__gpa)      <span class="cm"># ❌ AttributeError</span></code></pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Getters &amp; Setters — Controlled Access with Validation</div>
+    <div class="callout c-blue" style="margin-bottom:14px">
+      <strong>Why use Getters/Setters?</strong>
+      When you want to READ or WRITE a private variable but with logic — e.g., prevent a negative salary, validate an email format, or log every change.
+    </div>
+<pre><code><span class="kw">class</span> <span class="cl">BankAccount</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="sf">self</span>, owner, balance):
+        <span class="sf">self</span>.owner    = owner
+        <span class="sf">self</span>.__balance = balance    <span class="cm"># private — outsiders can't touch directly</span>
+
+    <span class="cm"># GETTER — lets you READ the private value safely</span>
+    <span class="kw">def</span> <span class="fn">get_balance</span>(<span class="sf">self</span>):
+        <span class="kw">return</span> <span class="sf">self</span>.__balance
+
+    <span class="cm"># SETTER — lets you UPDATE the private value WITH validation</span>
+    <span class="kw">def</span> <span class="fn">deposit</span>(<span class="sf">self</span>, amount):
+        <span class="kw">if</span> amount > <span class="num">0</span>:
+            <span class="sf">self</span>.__balance += amount
+            <span class="fn">print</span>(<span class="st">f"Deposited {amount}. New balance: {self.__balance}"</span>)
+        <span class="kw">else</span>:
+            <span class="fn">print</span>(<span class="st">"Error: deposit must be positive!"</span>)
+
+acc = <span class="cl">BankAccount</span>(<span class="st">"Ahmed"</span>, <span class="num">1000</span>)
+<span class="fn">print</span>(acc.get_balance())    <span class="cm"># 1000  ← getter</span>
+acc.deposit(<span class="num">500</span>)            <span class="cm"># Deposited 500. New balance: 1500</span>
+acc.deposit(<span class="num">-200</span>)           <span class="cm"># Error: deposit must be positive!</span>
+acc.__balance = <span class="num">9999</span>        <span class="cm"># ❌ this does NOT change the real __balance</span>
+                             <span class="cm">#    Python creates a NEW public attr instead!</span></code></pre>
+  </div>
+
+  <!-- Protected with inheritance -->
+  <div class="card">
+    <div class="card-title">Protected Members &amp; Inheritance</div>
+<pre><code><span class="kw">class</span> <span class="cl">Base</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="sf">self</span>):
+        <span class="sf">self</span>._value = <span class="num">42</span>      <span class="cm"># protected (single underscore)</span>
+
+<span class="kw">class</span> <span class="cl">Child</span>(<span class="cl">Base</span>):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="sf">self</span>):
+        <span class="cl">Base</span>.<span class="fn">__init__</span>(<span class="sf">self</span>)
+        <span class="fn">print</span>(<span class="sf">self</span>._value)    <span class="cm"># ✅ accessible in subclass: 42</span>
+        <span class="sf">self</span>._value = <span class="num">100</span>    <span class="cm"># ✅ can modify it too</span>
+
+c = <span class="cl">Child</span>()           <span class="cm"># prints 42</span>
+<span class="fn">print</span>(c._value)       <span class="cm"># 100 (accessible but frowned upon outside)</span></code></pre>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!--  INHERITANCE                                        -->
+<!-- ════════════════════════════════════════════════════ -->
+<section class="section" id="inherit">
+  <div class="section-header">
+    <div class="section-num" style="background:rgba(63,185,80,0.15);color:var(--accent-green)">3</div>
+    <div>
+      <div class="section-title" style="color:var(--accent-green)">Inheritance</div>
+      <div class="section-desc">Child class inherits attributes &amp; methods from Parent class. The "is-a" relationship.</div>
+    </div>
+  </div>
+
+  <div class="callout c-green">
+    <strong>The Is-A Rule</strong>
+    Use inheritance only when the relationship makes sense as "is-a": Dog IS AN Animal ✓ | Car IS A Vehicle ✓ | Car IS A Person ✗
+  </div>
+
+  <div class="card">
+    <div class="card-title">Basic Syntax — Python vs C++</div>
+<pre><code><span class="cm"># ── Python ──────────────────────────────────────────────
+#   class Child(Parent):     ← Python syntax
+#
+# ── C++ ─────────────────────────────────────────────────
+#   class Dog : public Animal { };   ← C++ syntax
+# ─────────────────────────────────────────────────────────</span>
+
+<span class="kw">class</span> <span class="cl">Animal</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="sf">self</span>, name):
+        <span class="sf">self</span>.name = name
+
+    <span class="kw">def</span> <span class="fn">eat</span>(<span class="sf">self</span>):
+        <span class="fn">print</span>(<span class="st">f"{self.name} is eating."</span>)
+
+    <span class="kw">def</span> <span class="fn">describe</span>(<span class="sf">self</span>):
+        <span class="fn">print</span>(<span class="st">f"I am an animal named {self.name}."</span>)
+
+
+<span class="kw">class</span> <span class="cl">Dog</span>(<span class="cl">Animal</span>):       <span class="cm"># ← inherits from Animal</span>
+    <span class="kw">def</span> <span class="fn">bark</span>(<span class="sf">self</span>):
+        <span class="fn">print</span>(<span class="st">"Woof!"</span>)
+
+
+d = <span class="cl">Dog</span>(<span class="st">"Rex"</span>)          <span class="cm"># uses Animal's __init__ automatically</span>
+d.eat()                  <span class="cm"># ✅ Inherited: Rex is eating.</span>
+d.describe()             <span class="cm"># ✅ Inherited: I am an animal named Rex.</span>
+d.bark()                 <span class="cm"># ✅ Dog's own method: Woof!</span></code></pre>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Child with its own <span class="inline">__init__</span> — Calling Parent Constructor</div>
+    <div class="callout c-red">
+      <strong>Critical Rule</strong>
+      If the child defines its own <code>__init__</code>, it MUST explicitly call the parent's <code>__init__</code> — otherwise the parent's instance variables won't exist and you'll get an AttributeError.
+    </div>
+<pre><code><span class="kw">class</span> <span class="cl">Person</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="sf">self</span>, name, id_num):
+        <span class="sf">self</span>.name   = name
+        <span class="sf">self</span>.id_num = id_num
+
+    <span class="kw">def</span> <span class="fn">display</span>(<span class="sf">self</span>):
+        <span class="fn">print</span>(<span class="st">f"Name: {self.name} | ID: {self.id_num}"</span>)
+
+
+<span class="kw">class</span> <span class="cl">Employee</span>(<span class="cl">Person</span>):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="sf">self</span>, name, id_num, salary, role):
+        <span class="cm"># ─── Option 1: Call parent by name ───────────────────
+        #   Person.__init__(self, name, id_num)
+        #
+        # ─── Option 2: super() — PREFERRED ──────────────────
+        #   Doesn't require knowing the parent class name
+        #   Works better with multiple inheritance</span>
+        <span class="fn">super</span>().<span class="fn">__init__</span>(name, id_num)   <span class="cm"># ← call parent first</span>
+
+        <span class="sf">self</span>.salary = salary           <span class="cm"># Employee's own attributes</span>
+        <span class="sf">self</span>.role   = role
+
+    <span class="kw">def</span> <span class="fn">show_details</span>(<span class="sf">self</span>):
+        <span class="sf">self</span>.display()                  <span class="cm"># call inherited method</span>
+        <span class="fn">print</span>(<span class="st">f"Role: {self.role} | Salary: {self.salary}"</span>)
+
+
+emp = <span class="cl">Employee</span>(<span class="st">"Sara"</span>, <span class="st">"EMP-001"</span>, <span class="num">6000</span>, <span class="st">"Engineer"</span>)
+emp.show_details()
+<span class="cm"># Name: Sara | ID: EMP-001
+# Role: Engineer | Salary: 6000</span></code></pre>
+
+    <div class="callout c-red">
+      <strong>What happens if you forget super()?</strong>
+<pre style="margin:8px 0;padding:12px;background:var(--code-bg);border-radius:8px;font-size:.82rem"><code><span class="kw">class</span> <span class="cl">A</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="sf">self</span>): <span class="sf">self</span>.x = <span class="num">10</span>
+
+<span class="kw">class</span> <span class="cl">B</span>(<span class="cl">A</span>):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="sf">self</span>): <span class="sf">self</span>.y = <span class="num">20</span>   <span class="cm"># ← did NOT call super()</span>
+
+b = <span class="cl">B</span>()
+<span class="fn">print</span>(b.y)   <span class="cm"># 20 ✅</span>
+<span class="fn">print</span>(b.x)   <span class="cm"># ❌ AttributeError: 'B' object has no attribute 'x'</span></code></pre>
+    </div>
+  </div>
+
+  <!-- Types of Inheritance -->
+  <div class="card">
+    <div class="card-title">Types of Inheritance — All 5 Types</div>
+    <div class="inh-types">
+      <div class="inh-type it1">
+        <h4 style="color:var(--accent-blue)">1. Single Inheritance</h4>
+        <div class="diagram">Animal → Dog</div>
+        <p style="font-size:.85rem;color:var(--text2)">One parent, one child.</p>
+<pre><code><span class="kw">class</span> <span class="cl">Dog</span>(<span class="cl">Animal</span>): <span class="kw">pass</span></code></pre>
+      </div>
+      <div class="inh-type it2">
+        <h4 style="color:var(--accent-green)">2. Multiple Inheritance</h4>
+        <div class="diagram">Father + Mother → Child</div>
+        <p style="font-size:.85rem;color:var(--text2)">One child, many parents.</p>
+<pre><code><span class="kw">class</span> <span class="cl">C</span>(<span class="cl">A</span>, <span class="cl">B</span>): <span class="kw">pass</span></code></pre>
+      </div>
+      <div class="inh-type it3">
+        <h4 style="color:var(--accent-purple)">3. Multilevel Inheritance</h4>
+        <div class="diagram">Vehicle → Car → SportsCar</div>
+        <p style="font-size:.85rem;color:var(--text2)">Chain: grandparent → parent → child.</p>
+<pre><code><span class="kw">class</span> <span class="cl">SportsCar</span>(<span class="cl">Car</span>): <span class="kw">pass</span>
+<span class="cm"># Car already inherits Vehicle</span></code></pre>
+      </div>
+      <div class="inh-type it4">
+        <h4 style="color:var(--accent-orange)">4. Hierarchical Inheritance</h4>
+        <div class="diagram">Animal → Dog, Cat, Horse</div>
+        <p style="font-size:.85rem;color:var(--text2)">One parent, many children.</p>
+<pre><code><span class="kw">class</span> <span class="cl">Dog</span>(<span class="cl">Animal</span>): <span class="kw">pass</span>
+<span class="kw">class</span> <span class="cl">Cat</span>(<span class="cl">Animal</span>): <span class="kw">pass</span></code></pre>
+      </div>
+      <div class="inh-type it5" style="grid-column:span 2">
+        <h4 style="color:var(--accent-cyan)">5. Hybrid Inheritance</h4>
+        <div class="diagram">Parent → Child1, Child2 → GrandChild (mix of multiple types)</div>
+        <p style="font-size:.85rem;color:var(--text2)">Combination of two or more types of inheritance.</p>
+<pre><code><span class="kw">class</span> <span class="cl">A</span>: <span class="kw">pass</span>
+<span class="kw">class</span> <span class="cl">B</span>(<span class="cl">A</span>): <span class="kw">pass</span>    <span class="cm"># Single</span>
+<span class="kw">class</span> <span class="cl">C</span>(<span class="cl">A</span>): <span class="kw">pass</span>    <span class="cm"># Hierarchical</span>
+<span class="kw">class</span> <span class="cl">D</span>(<span class="cl">B</span>, <span class="cl">C</span>): <span class="kw">pass</span>  <span class="cm"># Multiple → Hybrid</span></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Method Overriding -->
+  <div class="card">
+    <div class="card-title">Method Overriding — Redefine parent behaviour in child</div>
+    <p style="color:var(--text2);font-size:.92rem;margin-bottom:14px">When a child class defines a method with the <strong>same name</strong> as one in the parent, it <em>overrides</em> the parent version. When you call that method on the child object, Python runs the child's version.</p>
+<pre><code><span class="kw">class</span> <span class="cl">Animal</span>:
+    <span class="kw">def</span> <span class="fn">eat</span>(<span class="sf">self</span>):
+        <span class="fn">print</span>(<span class="st">"I can eat."</span>)           <span class="cm"># generic behaviour</span>
+
+<span class="kw">class</span> <span class="cl">Dog</span>(<span class="cl">Animal</span>):
+    <span class="kw">def</span> <span class="fn">eat</span>(<span class="sf">self</span>):                   <span class="cm"># ← OVERRIDE: same name!</span>
+        <span class="fn">super</span>().<span class="fn">eat</span>()                <span class="cm"># ← optional: run parent's version first</span>
+        <span class="fn">print</span>(<span class="st">"I especially love bones!"</span>)  <span class="cm"># ← then add own behaviour</span>
+
+dog = <span class="cl">Dog</span>()
+dog.eat()</code></pre>
+    <div class="output">I can eat.<br>I especially love bones!</div>
+
+<pre><code><span class="cm"># More complete example — Bird hierarchy</span>
+<span class="kw">class</span> <span class="cl">Bird</span>:
+    <span class="kw">def</span> <span class="fn">intro</span>(<span class="sf">self</span>): <span class="fn">print</span>(<span class="st">"I am a bird."</span>)
+    <span class="kw">def</span> <span class="fn">flight</span>(<span class="sf">self</span>): <span class="fn">print</span>(<span class="st">"Most birds can fly."</span>)
+
+<span class="kw">class</span> <span class="cl">Sparrow</span>(<span class="cl">Bird</span>):
+    <span class="kw">def</span> <span class="fn">flight</span>(<span class="sf">self</span>): <span class="fn">print</span>(<span class="st">"Sparrows can fly."</span>)    <span class="cm"># override</span>
+
+<span class="kw">class</span> <span class="cl">Ostrich</span>(<span class="cl">Bird</span>):
+    <span class="kw">def</span> <span class="fn">flight</span>(<span class="sf">self</span>): <span class="fn">print</span>(<span class="st">"Ostriches cannot fly."</span>)  <span class="cm"># override</span>
+
+<span class="kw">for</span> b <span class="kw">in</span> [<span class="cl">Bird</span>(), <span class="cl">Sparrow</span>(), <span class="cl">Ostrich</span>()]:
+    b.intro()    <span class="cm"># inherited from Bird</span>
+    b.flight()   <span class="cm"># each calls its own overridden version</span></code></pre>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Private Members Are NOT Inherited</div>
+<pre><code><span class="kw">class</span> <span class="cl">Car</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="sf">self</span>):
+        <span class="sf">self</span>.color   = <span class="st">"Red"</span>      <span class="cm"># public  → inherited ✅</span>
+        <span class="sf">self</span>._brand  = <span class="st">"Toyota"</span>   <span class="cm"># protected → accessible in child ✅</span>
+        <span class="sf">self</span>.__engine = <span class="st">"V8"</span>     <span class="cm"># private → NOT inherited ❌</span>
+
+<span class="kw">class</span> <span class="cl">BMW</span>(<span class="cl">Car</span>):
+    <span class="kw">def</span> <span class="fn">show</span>(<span class="sf">self</span>):
+        <span class="fn">print</span>(<span class="sf">self</span>.color)         <span class="cm"># ✅ Red</span>
+        <span class="fn">print</span>(<span class="sf">self</span>._brand)        <span class="cm"># ✅ Toyota</span>
+        <span class="fn">print</span>(<span class="sf">self</span>.__engine)      <span class="cm"># ❌ AttributeError</span>
+
+b = <span class="cl">BMW</span>()
+b.show()</code></pre>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!--  POLYMORPHISM                                       -->
+<!-- ════════════════════════════════════════════════════ -->
+<section class="section" id="poly">
+  <div class="section-header">
+    <div class="section-num" style="background:rgba(188,140,255,0.15);color:var(--accent-purple)">4</div>
+    <div>
+      <div class="section-title" style="color:var(--accent-purple)">Polymorphism</div>
+      <div class="section-desc">"Poly" = many · "morphism" = forms. Same name, different behaviour.</div>
+    </div>
+  </div>
+
+  <div class="callout c-purple">
+    <strong>Core Idea</strong>
+    Python lets different objects respond to the SAME method name in their OWN way. You can treat different objects uniformly — and each will "do the right thing."
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Operator Polymorphism</div>
+      <p style="color:var(--text2);font-size:.9rem;margin-bottom:10px">The <span class="inline">+</span> operator behaves differently based on data type — that's polymorphism!</p>
+<pre><code><span class="cm"># + on integers → addition</span>
+<span class="fn">print</span>(<span class="num">3</span> + <span class="num">4</span>)              <span class="cm"># 7</span>
+
+<span class="cm"># + on strings → concatenation</span>
+<span class="fn">print</span>(<span class="st">"Hello"</span> + <span class="st">" World"</span>)  <span class="cm"># Hello World</span>
+
+<span class="cm"># + on lists → merge</span>
+<span class="fn">print</span>([<span class="num">1</span>,<span class="num">2</span>] + [<span class="num">3</span>,<span class="num">4</span>])      <span class="cm"># [1, 2, 3, 4]</span></code></pre>
+    </div>
+    <div class="card">
+      <div class="card-title">Function Polymorphism — <span class="inline">len()</span></div>
+      <p style="color:var(--text2);font-size:.9rem;margin-bottom:10px"><span class="inline">len()</span> works on strings, lists, and dicts — different logic, same function name.</p>
+<pre><code><span class="fn">print</span>(<span class="fn">len</span>(<span class="st">"Python"</span>))          <span class="cm"># 6  (number of chars)</span>
+<span class="fn">print</span>(<span class="fn">len</span>([<span class="st">"a"</span>,<span class="st">"b"</span>,<span class="st">"c"</span>]))    <span class="cm"># 3  (number of items)</span>
+<span class="fn">print</span>(<span class="fn">len</span>({<span class="st">"x"</span>:<span class="num">1</span>, <span class="st">"y"</span>:<span class="num">2</span>}))    <span class="cm"># 2  (number of keys)</span></code></pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Class Polymorphism — Same method name, different classes</div>
+<pre><code><span class="kw">class</span> <span class="cl">Cat</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="sf">self</span>, name, age):
+        <span class="sf">self</span>.name = name; <span class="sf">self</span>.age = age
+    <span class="kw">def</span> <span class="fn">info</span>(<span class="sf">self</span>):
+        <span class="fn">print</span>(<span class="st">f"I am a cat. Name: {self.name}, Age: {self.age}"</span>)
+    <span class="kw">def</span> <span class="fn">sound</span>(<span class="sf">self</span>): <span class="fn">print</span>(<span class="st">"Meow!"</span>)
+
+<span class="kw">class</span> <span class="cl">Dog</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="sf">self</span>, name, age):
+        <span class="sf">self</span>.name = name; <span class="sf">self</span>.age = age
+    <span class="kw">def</span> <span class="fn">info</span>(<span class="sf">self</span>):                           <span class="cm"># ← same name as Cat.info</span>
+        <span class="fn">print</span>(<span class="st">f"I am a dog. Name: {self.name}, Age: {self.age}"</span>)
+    <span class="kw">def</span> <span class="fn">sound</span>(<span class="sf">self</span>): <span class="fn">print</span>(<span class="st">"Bark!"</span>)           <span class="cm"># ← same name as Cat.sound</span>
+
+cat1 = <span class="cl">Cat</span>(<span class="st">"Kitty"</span>, <span class="num">2</span>)
+dog1 = <span class="cl">Dog</span>(<span class="st">"Fluffy"</span>, <span class="num">4</span>)
+
+<span class="cm"># Polymorphism in action: same loop, different behaviour</span>
+<span class="kw">for</span> animal <span class="kw">in</span> (cat1, dog1):
+    animal.sound()            <span class="cm"># Meow! / Bark! — Python knows which to call</span>
+    animal.info()</code></pre>
+    <div class="output">Meow!<br>I am a cat. Name: Kitty, Age: 2<br>Bark!<br>I am a dog. Name: Fluffy, Age: 4</div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Method Overriding (Polymorphism + Inheritance)</div>
+      <p style="color:var(--text2);font-size:.88rem;margin-bottom:10px">When a child overrides a parent method — calling the method on different objects gives different results.</p>
+<pre><code><span class="kw">class</span> <span class="cl">Shape</span>:
+    <span class="kw">def</span> <span class="fn">area</span>(<span class="sf">self</span>):
+        <span class="fn">print</span>(<span class="st">"Calculating area..."</span>)
+
+<span class="kw">class</span> <span class="cl">Circle</span>(<span class="cl">Shape</span>):
+    <span class="kw">def</span> <span class="fn">area</span>(<span class="sf">self</span>):          <span class="cm"># override</span>
+        <span class="fn">print</span>(<span class="st">"Area = pi * r^2"</span>)
+
+<span class="kw">class</span> <span class="cl">Rectangle</span>(<span class="cl">Shape</span>):
+    <span class="kw">def</span> <span class="fn">area</span>(<span class="sf">self</span>):          <span class="cm"># override</span>
+        <span class="fn">print</span>(<span class="st">"Area = w * h"</span>)
+
+<span class="kw">for</span> s <span class="kw">in</span> [<span class="cl">Shape</span>(), <span class="cl">Circle</span>(), <span class="cl">Rectangle</span>()]:
+    s.area()</code></pre>
+    </div>
+    <div class="card">
+      <div class="card-title">Method Overloading — Python's Way</div>
+      <div class="callout c-red" style="margin-bottom:10px">
+        <strong>Python has NO native overloading!</strong>
+        Defining the same method name twice replaces the first one. Use default parameters instead.
+      </div>
+<pre><code><span class="cm"># ❌ This does NOT work in Python</span>
+<span class="kw">class</span> <span class="cl">Bad</span>:
+    <span class="kw">def</span> <span class="fn">add</span>(<span class="sf">self</span>, x, y): <span class="fn">print</span>(x+y)
+    <span class="kw">def</span> <span class="fn">add</span>(<span class="sf">self</span>, x, y, z): <span class="fn">print</span>(x+y+z)
+<span class="cl">Bad</span>().add(<span class="num">2</span>, <span class="num">3</span>)    <span class="cm"># TypeError! (1st add is gone)</span>
+
+<span class="cm"># ✅ Correct Python way: default args</span>
+<span class="kw">def</span> <span class="fn">add</span>(x, y, z=<span class="num">0</span>):   <span class="cm"># z is optional, defaults to 0</span>
+    <span class="kw">return</span> x + y + z
+
+<span class="fn">print</span>(<span class="fn">add</span>(<span class="num">2</span>, <span class="num">3</span>))       <span class="cm"># 5  (z=0)</span>
+<span class="fn">print</span>(<span class="fn">add</span>(<span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>))    <span class="cm"># 9</span></code></pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Overriding vs Overloading — Key Difference</div>
+    <div class="grid2">
+      <div style="background:var(--surface2);border-radius:10px;padding:16px;border-left:4px solid var(--accent-green)">
+        <div style="font-weight:700;color:var(--accent-green);margin-bottom:8px">Method OVERRIDING</div>
+        <ul style="font-size:.88rem;color:var(--text2);padding-right:16px;list-style:disc;line-height:2">
+          <li>Same method name</li>
+          <li>In a <strong>child class</strong> (inheritance required)</li>
+          <li>Child gives its own version of the method</li>
+          <li>Happens at <strong>runtime</strong></li>
+          <li>Python: fully supported natively</li>
+        </ul>
+      </div>
+      <div style="background:var(--surface2);border-radius:10px;padding:16px;border-left:4px solid var(--accent-orange)">
+        <div style="font-weight:700;color:var(--accent-orange);margin-bottom:8px">Method OVERLOADING</div>
+        <ul style="font-size:.88rem;color:var(--text2);padding-right:16px;list-style:disc;line-height:2">
+          <li>Same method name</li>
+          <li>In the <strong>same class</strong></li>
+          <li>Different number/type of arguments</li>
+          <li>Happens at <strong>compile time</strong> (C++)</li>
+          <li>Python: NOT natively supported — use default args</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!--  C++ vs PYTHON                                      -->
+<!-- ════════════════════════════════════════════════════ -->
+<section class="section" id="compare">
+  <div class="section-header">
+    <div class="section-num" style="background:rgba(57,211,243,0.15);color:var(--accent-cyan)">⚔</div>
+    <div>
+      <div class="section-title" style="color:var(--accent-cyan)">C++ vs Python — Direct Comparison</div>
+      <div class="section-desc">Since you learned C++ first — here's every important difference</div>
+    </div>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th class="th-concept">Concept</th>
+          <th class="th-cpp">C++</th>
+          <th class="th-python">Python</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="td-concept">Define a class</td><td class="td-cpp">class MyClass { };</td><td class="td-python">class MyClass:</td></tr>
+        <tr><td class="td-concept">Constructor</td><td class="td-cpp">MyClass() { }</td><td class="td-python">def __init__(self): ...</td></tr>
+        <tr><td class="td-concept">Self reference</td><td class="td-cpp">this->name</td><td class="td-python">self.name (must be explicit!)</td></tr>
+        <tr><td class="td-concept">Destructor</td><td class="td-cpp">~MyClass() { }</td><td class="td-python">def __del__(self): ... (rare)</td></tr>
+        <tr><td class="td-concept">Print object</td><td class="td-cpp">cout &lt;&lt; obj (overload &lt;&lt;)</td><td class="td-python">print(obj) → uses __str__</td></tr>
+        <tr><td class="td-concept">Public member</td><td class="td-cpp">public: int age;</td><td class="td-python">self.age (default)</td></tr>
+        <tr><td class="td-concept">Protected member</td><td class="td-cpp">protected: int age;</td><td class="td-python">self._age (convention)</td></tr>
+        <tr><td class="td-concept">Private member</td><td class="td-cpp">private: int age;</td><td class="td-python">self.__age (name mangling)</td></tr>
+        <tr><td class="td-concept">Inheritance</td><td class="td-cpp">class Dog : public Animal { };</td><td class="td-python">class Dog(Animal):</td></tr>
+        <tr><td class="td-concept">Call parent ctor</td><td class="td-cpp">Animal::Animal(args);</td><td class="td-python">super().__init__(args)</td></tr>
+        <tr><td class="td-concept">Multiple inherit</td><td class="td-cpp">class C : public A, public B { };</td><td class="td-python">class C(A, B):</td></tr>
+        <tr><td class="td-concept">Method overloading</td><td class="td-cpp">Fully native — different signatures</td><td class="td-python">NOT native → use default args</td></tr>
+        <tr><td class="td-concept">Method overriding</td><td class="td-cpp">virtual keyword needed for runtime</td><td class="td-python">Always runtime — no keyword needed</td></tr>
+        <tr><td class="td-concept">Delete object</td><td class="td-cpp">delete ptr; (heap only)</td><td class="td-python">del obj (garbage collected)</td></tr>
+        <tr><td class="td-concept">Empty class body</td><td class="td-cpp">class Empty { };</td><td class="td-python">class Empty: pass</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!--  QUICK REFERENCE                                    -->
+<!-- ════════════════════════════════════════════════════ -->
+<section class="section" id="quickref">
+  <div class="section-header">
+    <div class="section-num" style="background:rgba(227,179,65,0.15);color:var(--accent-yellow)">⚡</div>
+    <div>
+      <div class="section-title" style="color:var(--accent-yellow)">Quick Reference Card</div>
+      <div class="section-desc">Screenshot this — everything you need at a glance</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="qr-grid">
+      <div class="qr-item"><div class="qr-key">class ClassName:</div><div class="qr-val">Define a new class</div></div>
+      <div class="qr-item"><div class="qr-key">def __init__(self, ...):</div><div class="qr-val">Constructor — runs on object creation</div></div>
+      <div class="qr-item"><div class="qr-key">self.var = val</div><div class="qr-val">Instance variable (owned by the object)</div></div>
+      <div class="qr-item"><div class="qr-key">class Child(Parent):</div><div class="qr-val">Inherit from Parent</div></div>
+      <div class="qr-item"><div class="qr-key">super().__init__(...)</div><div class="qr-val">Call parent constructor</div></div>
+      <div class="qr-item"><div class="qr-key">self.__var</div><div class="qr-val">Private — accessible only inside class</div></div>
+      <div class="qr-item"><div class="qr-key">self._var</div><div class="qr-val">Protected — convention: don't touch from outside</div></div>
+      <div class="qr-item"><div class="qr-key">def __str__(self):</div><div class="qr-val">Controls what print(obj) displays</div></div>
+      <div class="qr-item"><div class="qr-key">del obj</div><div class="qr-val">Delete an object</div></div>
+      <div class="qr-item"><div class="qr-key">pass</div><div class="qr-val">Empty class/method placeholder</div></div>
+      <div class="qr-item"><div class="qr-key">def method(self, x=0):</div><div class="qr-val">Default arg = Python's "overloading"</div></div>
+      <div class="qr-item"><div class="qr-key">obj._Class__var</div><div class="qr-val">Name mangling — force-access private</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!--  QUIZ                                               -->
+<!-- ════════════════════════════════════════════════════ -->
+<section class="section" id="quiz">
+  <div class="quiz-wrap">
+    <div class="quiz-title">🎯 Practice Questions</div>
+
+    <!-- Q1 -->
+    <div class="question">
+      <div class="q-num">Question 1</div>
+      <div class="q-text">What will this code output?</div>
+      <div class="q-code">class Person:
+    def __init__(self, name): self.name = name
+    def isEmployee(self): return False
+
+class Employee(Person):
+    def isEmployee(self): return True
+
+p = Person("Ali")
+e = Employee("Sara")
+print(p.isEmployee(), e.isEmployee())</div>
+      <div class="options">
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">A</span>True True</div>
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">B</span>False False</div>
+        <div class="opt" onclick="answer(this,true)"><span class="opt-badge">C</span>False True</div>
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">D</span>Error</div>
+      </div>
+      <div class="fb fb-ok">✅ Correct! Person.isEmployee() returns False. Employee overrides it to return True. Method overriding in action.</div>
+      <div class="fb fb-bad">❌ Wrong. Person.isEmployee() → False. Employee.isEmployee() is an override → True. Answer: False True</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question">
+      <div class="q-num">Question 2</div>
+      <div class="q-text">What happens when you try to access <span class="inline">emp.__salary</span> from outside the class?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">A</span>Prints the salary normally</div>
+        <div class="opt" onclick="answer(this,true)"><span class="opt-badge">B</span>AttributeError — private members can't be accessed directly from outside</div>
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">C</span>Returns None</div>
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">D</span>Returns 0</div>
+      </div>
+      <div class="fb fb-ok">✅ Correct! Double underscore triggers name mangling. The attribute is stored as _Employee__salary so direct access as __salary fails.</div>
+      <div class="fb fb-bad">❌ Wrong. __ (double underscore) makes the attribute private via name mangling → AttributeError when accessed directly from outside.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question">
+      <div class="q-num">Question 3</div>
+      <div class="q-text">What is the output?</div>
+      <div class="q-code">def add(x, y, z=0):
+    return x + y + z
+
+print(add(2, 3))
+print(add(2, 3, 4))</div>
+      <div class="options">
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">A</span>Error (can't call with 2 args)</div>
+        <div class="opt" onclick="answer(this,true)"><span class="opt-badge">B</span>5 then 9</div>
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">C</span>5 then 5</div>
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">D</span>0 then 9</div>
+      </div>
+      <div class="fb fb-ok">✅ Correct! z=0 is a default argument. add(2,3) → 2+3+0=5. add(2,3,4) → 2+3+4=9. This is Python's substitute for overloading.</div>
+      <div class="fb fb-bad">❌ Wrong. z=0 means z is optional. add(2,3) uses z=0 → 5. add(2,3,4) uses z=4 → 9.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question">
+      <div class="q-num">Question 4</div>
+      <div class="q-text">What type of inheritance is this?</div>
+      <div class="q-code">class A: pass
+class B(A): pass
+class C(B): pass</div>
+      <div class="options">
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">A</span>Multiple Inheritance</div>
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">B</span>Single Inheritance</div>
+        <div class="opt" onclick="answer(this,true)"><span class="opt-badge">C</span>Multilevel Inheritance</div>
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">D</span>Hierarchical Inheritance</div>
+      </div>
+      <div class="fb fb-ok">✅ Correct! A → B → C is a chain — grandparent → parent → child. That's Multilevel Inheritance.</div>
+      <div class="fb fb-bad">❌ Wrong. The chain A → B → C (each inheriting from the one above) is Multilevel Inheritance.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question">
+      <div class="q-num">Question 5</div>
+      <div class="q-text">If the child class defines <span class="inline">__init__</span> but forgets to call <span class="inline">super().__init__()</span>, what happens?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">A</span>Works fine — Python calls super() automatically</div>
+        <div class="opt" onclick="answer(this,true)"><span class="opt-badge">B</span>Parent's instance variables won't exist in the child → AttributeError when accessed</div>
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">C</span>SyntaxError</div>
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">D</span>Parent's __init__ runs before child's automatically</div>
+      </div>
+      <div class="fb fb-ok">✅ Correct! Python does NOT auto-call super().__init__(). If you skip it, parent attributes are never created → AttributeError.</div>
+      <div class="fb fb-bad">❌ Wrong. Python never calls parent __init__ automatically. Forgetting super().__init__() means parent attributes don't exist.</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="question">
+      <div class="q-num">Question 6</div>
+      <div class="q-text">What is the output?</div>
+      <div class="q-code">class Animal:
+    def eat(self): print("I can eat")
+
+class Dog(Animal):
+    def eat(self):
+        super().eat()
+        print("I like bones!")
+
+Dog().eat()</div>
+      <div class="options">
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">A</span>I like bones! only</div>
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">B</span>I can eat only</div>
+        <div class="opt" onclick="answer(this,true)"><span class="opt-badge">C</span>I can eat  then  I like bones!</div>
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">D</span>Error</div>
+      </div>
+      <div class="fb fb-ok">✅ Correct! super().eat() runs Animal.eat() first ("I can eat"), then Dog continues with its own line ("I like bones!").</div>
+      <div class="fb fb-bad">❌ Wrong. super().eat() calls Animal.eat() first → "I can eat". Then Dog's own code → "I like bones!"</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="question">
+      <div class="q-num">Question 7</div>
+      <div class="q-text">Which access modifier in Python is truly enforced by the language (not just a convention)?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">A</span>Public (no underscore)</div>
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">B</span>Protected (single underscore)</div>
+        <div class="opt" onclick="answer(this,true)"><span class="opt-badge">C</span>Private (double underscore) — via name mangling</div>
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">D</span>All three are strictly enforced</div>
+      </div>
+      <div class="fb fb-ok">✅ Correct! Only __ (double underscore) is mechanically enforced through name mangling. Single underscore _ is just a convention — programmers agree not to access it, but Python doesn't stop you.</div>
+      <div class="fb fb-bad">❌ Wrong. Single _ is a convention only. Double __ is actually enforced by Python's name mangling mechanism.</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="question">
+      <div class="q-num">Question 8</div>
+      <div class="q-text">What is the output of this code?</div>
+      <div class="q-code">print(len("Hello"))
+print(len([1, 2, 3, 4]))
+print(len({"a": 1, "b": 2}))</div>
+      <div class="options">
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">A</span>5, 3, 1</div>
+        <div class="opt" onclick="answer(this,true)"><span class="opt-badge">B</span>5, 4, 2</div>
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">C</span>Error</div>
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">D</span>6, 4, 2</div>
+      </div>
+      <div class="fb fb-ok">✅ Correct! "Hello" = 5 chars. [1,2,3,4] = 4 items. {"a","b"} = 2 keys. len() is an example of polymorphism — same function, different behaviour per type.</div>
+      <div class="fb fb-bad">❌ Wrong. "Hello" has 5 characters / list has 4 items / dict has 2 keys → 5, 4, 2</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="question">
+      <div class="q-num">Question 9</div>
+      <div class="q-text">What is the output?</div>
+      <div class="q-code">class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age  = age
+    def __str__(self):
+        return f"{self.name}({self.age})"
+
+p = Person("John", 36)
+print(p)</div>
+      <div class="options">
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">A</span>&lt;__main__.Person object at 0x...&gt;</div>
+        <div class="opt" onclick="answer(this,true)"><span class="opt-badge">B</span>John(36)</div>
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">C</span>Error</div>
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">D</span>name=John, age=36</div>
+      </div>
+      <div class="fb fb-ok">✅ Correct! __str__ controls what print(obj) shows. It returns "John(36)" so that's what prints.</div>
+      <div class="fb fb-bad">❌ Wrong. __str__ is defined and returns f"{self.name}({self.age})" → John(36)</div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="question">
+      <div class="q-num">Question 10</div>
+      <div class="q-text">Which inheritance type has ONE parent and MULTIPLE children?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">A</span>Multiple Inheritance</div>
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">B</span>Multilevel Inheritance</div>
+        <div class="opt" onclick="answer(this,true)"><span class="opt-badge">C</span>Hierarchical Inheritance</div>
+        <div class="opt" onclick="answer(this,false)"><span class="opt-badge">D</span>Single Inheritance</div>
+      </div>
+      <div class="fb fb-ok">✅ Correct! Hierarchical = one parent, many children. Like: Animal → Dog, Cat, Bird (all inherit from Animal).</div>
+      <div class="fb fb-bad">❌ Wrong. One parent + many children = Hierarchical Inheritance. Multiple = many parents, one child.</div>
+    </div>
+
+  </div>
+</section>
+
+</div><!-- /container -->
+
+<footer>
+  <div class="credit">Made by Alfred Ramzy (Alfredo)</div>
+  <p style="margin-top:8px;color:var(--text3);font-size:.82rem">OOP in Python — Complete Exam Study Guide · Good luck! 🚀</p>
+</footer>
+
+<script>
+function answer(el, isCorrect) {
+  const q = el.closest('.question');
+  q.querySelectorAll('.opt').forEach(o => o.style.pointerEvents = 'none');
+  el.classList.add(isCorrect ? 'correct' : 'wrong');
+  if (!isCorrect) {
+    q.querySelectorAll('.opt').forEach(o => {
+      if (o.getAttribute('onclick')?.includes('true')) o.classList.add('correct');
+    });
+  }
+  const fbs = q.querySelectorAll('.fb');
+  fbs[isCorrect ? 0 : 1].classList.add('show');
+}
+
+document.querySelectorAll('.nav a').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+});
+</script>
+</body>
+</html>
